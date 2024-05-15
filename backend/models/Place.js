@@ -12,7 +12,7 @@ const placeSchema = new mongoose.Schema({
         type: String
     },
     photos:{
-        type: [String]
+        type: Array
     },
     description:{
         type: String
@@ -30,6 +30,9 @@ const placeSchema = new mongoose.Schema({
         type: Number
     },
     maxGuests:{
+        type: Number
+    },
+    price:{
         type: Number
     }
 })

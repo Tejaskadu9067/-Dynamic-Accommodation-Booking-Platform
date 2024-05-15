@@ -125,7 +125,7 @@ res.json(uploadedFiles)
 
 app.post('/places', (req,res) => {
     const {token} = req.cookies;
-    const {title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests} = req.body;
+    const {title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests,price} = req.body;
     jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
         if (error) throw error;
 
@@ -139,14 +139,15 @@ app.post('/places', (req,res) => {
             extraInfo, 
             checkIn, 
             checkOut, 
-            maxGuests
+            maxGuests,
+            price
         })
         res.json(placeDoc)
     })
     
 })
 
-app.get('/places', (req,res) => {
+app.get('/user-places', (req,res) => {
     const {token} = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
         if (error) throw error;
@@ -162,7 +163,7 @@ app.get('/places/:id', async(req,res) => {
 
 app.put('/places/:id', async(req,res) => {
     const {token} = req.cookies;
-    const {id, title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests} = req.body;
+    const {id, title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests, price} = req.body;
     
     jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
         if (error) throw error;
@@ -177,12 +178,17 @@ app.put('/places/:id', async(req,res) => {
                 extraInfo, 
                 checkIn, 
                 checkOut, 
-                maxGuests
+                maxGuests,
+                price
             });
             await placeDoc.save()
             res.json('ok')
         }
     })
+})
+
+app.get('/places', async(req,res)=>{
+    res.json(await Place.find())
 })
 
 

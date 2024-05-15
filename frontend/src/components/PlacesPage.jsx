@@ -6,7 +6,7 @@ import axios from "axios";
 function PlacesPage() {
   const [places, setPlaces] = useState("");
   useEffect(() => {
-    axios.get("/places").then(({ data }) => {
+    axios.get("/user-places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);
@@ -36,15 +36,15 @@ function PlacesPage() {
           </svg>
           Add new place
         </Link>
-        <div className="mt-4 ">
+        <div className="mt-8 ">
           {places.length > 0 &&
             places.map((place) => (
               <Link
                 key={place._id} // Add key prop here
                 to={"/account/places/"+place._id}
-                className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl"
+                className="flex mt-4 w-auto cursor-pointer gap-4 bg-blue-100 p-4 rounded-2xl"
               >
-                <div className="flex h-32 w-auto min-w-28 bg-gray-300 shrink-0 ">
+                <div className="flex h-32 w-22 min-w-28 bg-gray-300 shrink-0 ">
                   {place.photos.length > 0 && (
                     <img className="object-cover w-full rounded-xl" src={'http://localhost:8000/uploads/'+place.photos[0]} alt="" />
                   )}
