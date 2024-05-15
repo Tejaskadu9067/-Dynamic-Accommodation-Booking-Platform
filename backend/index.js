@@ -3,6 +3,7 @@ const cors = require("cors");
 const Place = require("./models/Place.js")
 const mongoose  = require("mongoose");
 const User = require("./models/User.js");
+const Booking = require("./models/Booking.js")
 const bcrypt = require("bcryptjs")
 const jwt = require ("jsonwebtoken")
 const cookieParser = require("cookie-parser");
@@ -189,6 +190,46 @@ app.put('/places/:id', async(req,res) => {
 
 app.get('/places', async(req,res)=>{
     res.json(await Place.find())
+})
+
+app.post('/bookings', async(req,res) => {
+    const userData = await getUserDataFromToken(req)
+    const {place,checkIn,checkOut,numberOfGuests,name,phone,price} = req.body
+    Booking.create({
+        place,
+        checkIn,
+        checkOut,
+        numberOfGuests,
+        name,
+        phone,
+        price,
+        user:userData.id,
+
+    }).then((doc)=>{
+        res.json(doc);
+    }).catch((error)=> {
+        throw error;
+    })
+
+})
+
+function getUserDataFromToken(req){
+    return new Promise((resolve, reject)=>{
+        jwt.verify(req.cookies.token, jwtSecret, {}, async (error, userData)=>{
+            if(error) throw error
+            resolve(userData)
+        })
+    })
+    
+
+}
+
+app.get('/bookings', async (req,res) => {
+    const userData = await getUserDataFromToken(req);
+    res.json(await Booking.find({
+        user:userData.id
+    }).populate('place'))
+    
 })
 
 
