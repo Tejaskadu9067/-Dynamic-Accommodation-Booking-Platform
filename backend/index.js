@@ -25,8 +25,8 @@ app.use(cors({
 }));
 
 
-mongoose.connect("mongodb://localhost:27017/Booking-app");
-
+// mongoose.connect("mongodb://localhost:27017/Booking-app");
+mongoose.connect("mongodb+srv://tejaskadu:root7385@mern-app.ru8fsje.mongodb.net/?retryWrites=true&w=majority&appName=Booking-App")
 
 app.get('/test', (req,res)=>{
     res.json('test ok')

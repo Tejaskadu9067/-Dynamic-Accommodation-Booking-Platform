@@ -31,7 +31,7 @@ function IndexPage() {
             </h3>
             
             <div className="mt-1">
-              <span className="font-bold">${place.price}</span> per night 
+              <span className="font-bold">${place.price}</span> per night stay
             </div>
 
            
